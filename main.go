@@ -3,21 +3,24 @@ package main
 import "fmt"
 
 type Student struct {
-	Name       string
-	Age        int
-	Grades     []int
-	IsStudying bool
+	Name   string
+	Grades []int
+}
+
+func (me Student) getAverage() float64 {
+	nums := me.Grades
+	total := 0
+	for _, i := range nums {
+		total += i
+	}
+	return float64(total) / float64(len(nums))
 }
 
 func main() {
 	me := Student{
-		Name:       "Assylkhan",
-		Age:        21,
-		Grades:     []int{90, 85, 40},
-		IsStudying: true,
+		Name:   "Assylkhan",
+		Grades: []int{10, 20, 30},
 	}
-
-	fmt.Println("Студент:", me)
-	fmt.Println("Имя:", me.Name)
-	fmt.Println("Учится сейчас?", me.IsStudying)
+	res := me.getAverage()
+	fmt.Println("avg: ", res)
 }
