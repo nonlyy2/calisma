@@ -2,15 +2,13 @@ package main
 
 import (
 	"fmt"
-	"neetcode/leetcode" // Импортируем твою папку
+	"neetcode/leetcode" // import
 )
 
 func main() {
 	nums := []int{2, 7, 11, 15}
-	target := 9
 
-	// Вызываем функцию через имя пакета
-	result := leetcode.TwoSum(nums, target)
+	result := leetcode.ContainsDuplicate(nums)
 
-	fmt.Println("LeetCode Two Sum:", result)
+	fmt.Println(result)
 }
