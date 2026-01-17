@@ -1,5 +1,8 @@
 package leetcode
 
+// Задача №217: Contains Duplicate
+// https://leetcode.com/problems/contains-duplicate/
+
 func ContainsDuplicate(nums []int) bool {
 	seen := make(map[int]bool)
 	for _, value := range nums {

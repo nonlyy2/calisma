@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"neetcode/leetcode" // import
+	"neetcode/leetcode"
 )
 
 func main() {
-	nums := []int{2, 7, 11, 15}
+	s := "anagram"
+	t := "nagaram"
 
-	result := leetcode.ContainsDuplicate(nums)
+	result := leetcode.IsAnagram(s, t)
 
 	fmt.Println(result)
 }

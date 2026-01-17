@@ -2,7 +2,6 @@ package leetcode
 
 // Задача №1: Two Sum
 // https://leetcode.com/problems/two-sum/
-// Сложность: O(n^2) - Brute Force
 
 func TwoSum(nums []int, target int) [][]int {
 	result := [][]int{}
