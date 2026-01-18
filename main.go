@@ -6,9 +6,9 @@ import (
 )
 
 func main() {
-	s := "anaGana - "
-
-	result := leetcode.IsPalindrome(s)
+	numbers := []int{2, 7, 11, 15}
+	target := 9
+	result := leetcode.TwoSumII(numbers, target)
 
 	fmt.Println(result)
 }
