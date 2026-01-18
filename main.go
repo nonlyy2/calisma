@@ -6,10 +6,9 @@ import (
 )
 
 func main() {
-	s := "anagram"
-	t := "nagaram"
+	s := "anaGana - "
 
-	result := leetcode.IsAnagram(s, t)
+	result := leetcode.IsPalindrome(s)
 
 	fmt.Println(result)
 }
