@@ -1,5 +1,8 @@
 package leetcode
 
+// Задача №15: 3Sum
+// https://leetcode.com/problems/3sum/
+
 import "sort"
 
 func ThreeSum(nums []int) [][]int {
