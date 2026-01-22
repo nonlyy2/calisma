@@ -6,9 +6,13 @@ import (
 )
 
 func main() {
-	nums1 := []int{-1, 0, 1, 2, -1, -4}
-	fmt.Printf("input: %v\n", nums1)
-	res1 := leetcode.ThreeSum(nums1)
-	fmt.Printf("result: %v\n", res1)
-	fmt.Println("expected: [[-1 -1 2] [-1 0 1]]")
+	input := []string{"eat", "tea", "tan", "ate", "nat", "bat"}
+
+	fmt.Printf("Входные данные: %v\n\n", input)
+	result := leetcode.GroupAnagrams(input)
+	fmt.Println("Результат (порядок групп может отличаться):")
+	fmt.Println("-------------------------------------------")
+	for i, group := range result {
+		fmt.Printf("Группа %d: %v\n", i+1, group)
+	}
 }
