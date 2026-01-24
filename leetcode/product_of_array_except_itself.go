@@ -6,27 +6,16 @@ package leetcode
 func ProductExceptSelf(nums []int) []int {
 	length := len(nums)
 	res := make([]int, length)
-	prefix := make([]int, length)
-	suffix := make([]int, length)
+	res[0] = 1
 
-	for i := 0; i < length-1; i++ {
-		if i == 0 {
-			prefix[0] = 1
-			continue
-		}
-		prefix[i] = prefix[i-1] * nums[i-1]
+	for i := 1; i < length; i++ {
+		res[i] = res[i-1] * nums[i-1]
 	}
 
-	for j := length - 1; j >= 0; j-- {
-		if j == length-1 {
-			suffix[length-1] = 1
-			continue
-		}
-		suffix[j] = suffix[j+1] * nums[j+1]
-	}
-
-	for k := 0; k < length; k++ {
-		res[k] = prefix[k] * suffix[k]
+	postfix := 1
+	for i := length - 1; i >= 0; i-- {
+		res[i] = res[i] * postfix
+		postfix = postfix * nums[i]
 	}
 
 	return res
