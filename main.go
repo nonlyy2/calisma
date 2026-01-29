@@ -6,30 +6,28 @@ import (
 )
 
 func main() {
-	// ТЕСТ 1: Классика
-	// Цепочка: 1, 2, 3, 4
-	nums1 := []int{100, 4, 200, 1, 3, 2}
-	printTest(nums1, 4, 1)
+	// ТЕСТ 1: Классический пример
+	// Лучшая пара: 8 (индекс 1) и 7 (индекс 8).
+	// Ширина: 8-1 = 7. Высота: min(8, 7) = 7. Площадь: 49.
+	height1 := []int{1, 8, 6, 2, 5, 4, 8, 3, 7}
+	printTest(height1, 49, 1)
 
-	// ТЕСТ 2: Длинная змейка
-	// Цепочка: 0, 1, 2, 3, 4, 5, 6, 7, 8
-	nums2 := []int{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}
-	printTest(nums2, 9, 2)
+	// ТЕСТ 2: Просто две палки
+	// Ширина 1, высота 1 -> Площадь 1
+	height2 := []int{1, 1}
+	printTest(height2, 1, 2)
 
-	// ТЕСТ 3: Пустой массив
-	nums3 := []int{}
-	printTest(nums3, 0, 3)
-
-	// ТЕСТ 4: Только одно число (или дубликаты одного)
-	nums4 := []int{1, 1, 1, 1} // Длина 1
-	printTest(nums4, 1, 4)
+	// ТЕСТ 3: Проверка логики сдвига
+	// Сначала возьмет края (4 и 4, ширина 4) -> 16
+	height3 := []int{4, 3, 2, 1, 4}
+	printTest(height3, 16, 3)
 }
 
 func printTest(input []int, expected, testNum int) {
 	fmt.Printf("--- Test %d ---\n", testNum)
 	fmt.Printf("Input: %v\n", input)
 
-	result := leetcode.LongestConsecutive(input)
+	result := leetcode.MaxArea(input)
 	fmt.Printf("Result: %d (Expected: %d)\n", result, expected)
 
 	if result == expected {
