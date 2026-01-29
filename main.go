@@ -3,43 +3,39 @@ package main
 import (
 	"fmt"
 	"neetcode/leetcode"
-	"reflect"
 )
 
 func main() {
-	// ТЕСТ 1: Обычные слова
-	input1 := []string{"neet", "code", "love", "you"}
-	fmt.Println("--- Тест 1 (Базовый) ---")
-	runTest(input1)
+	// ТЕСТ 1: Классика
+	// Цепочка: 1, 2, 3, 4
+	nums1 := []int{100, 4, 200, 1, 3, 2}
+	printTest(nums1, 4, 1)
 
-	// ТЕСТ 2: Символы, которые ломают простые сплиты
-	// Тут есть и пробелы, и решетки, и цифры
-	input2 := []string{"we", "say", ":", "yes", "!@#$%^&*()"}
-	fmt.Println("\n--- Тест 2 (Спецсимволы) ---")
-	runTest(input2)
+	// ТЕСТ 2: Длинная змейка
+	// Цепочка: 0, 1, 2, 3, 4, 5, 6, 7, 8
+	nums2 := []int{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}
+	printTest(nums2, 9, 2)
 
-	// ТЕСТ 3: Пустые строки и пустой список
-	input3 := []string{""} // Список с одной пустой строкой
-	fmt.Println("\n--- Тест 3 (Пустая строка) ---")
-	runTest(input3)
+	// ТЕСТ 3: Пустой массив
+	nums3 := []int{}
+	printTest(nums3, 0, 3)
 
-	input4 := []string{} // Вообще пустой список
-	fmt.Println("\n--- Тест 4 (Пустой список) ---")
-	runTest(input4)
+	// ТЕСТ 4: Только одно число (или дубликаты одного)
+	nums4 := []int{1, 1, 1, 1} // Длина 1
+	printTest(nums4, 1, 4)
 }
 
-func runTest(input []string) {
-	fmt.Printf("Input:  %v\n", input)
+func printTest(input []int, expected, testNum int) {
+	fmt.Printf("--- Test %d ---\n", testNum)
+	fmt.Printf("Input: %v\n", input)
 
-	encoded := leetcode.Encode(input)
-	fmt.Printf("Encoded: %s\n", encoded)
+	result := leetcode.LongestConsecutive(input)
+	fmt.Printf("Result: %d (Expected: %d)\n", result, expected)
 
-	decoded := leetcode.Decode(encoded)
-	fmt.Printf("Decoded: %v\n", decoded)
-
-	if reflect.DeepEqual(input, decoded) {
-		fmt.Println("✅ SUCCESS")
+	if result == expected {
+		fmt.Println("✅ PASSED")
 	} else {
 		fmt.Println("❌ FAILED")
 	}
+	fmt.Println()
 }
