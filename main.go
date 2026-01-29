@@ -6,29 +6,31 @@ import (
 )
 
 func main() {
-	// ТЕСТ 1: Классический пример
-	// Лучшая пара: 8 (индекс 1) и 7 (индекс 8).
-	// Ширина: 8-1 = 7. Высота: min(8, 7) = 7. Площадь: 49.
-	height1 := []int{1, 8, 6, 2, 5, 4, 8, 3, 7}
-	printTest(height1, 49, 1)
+	// ТЕСТ 1: База
+	printTest("()", true, 1)
 
-	// ТЕСТ 2: Просто две палки
-	// Ширина 1, высота 1 -> Площадь 1
-	height2 := []int{1, 1}
-	printTest(height2, 1, 2)
+	// ТЕСТ 2: Разные типы
+	printTest("()[]{}", true, 2)
 
-	// ТЕСТ 3: Проверка логики сдвига
-	// Сначала возьмет края (4 и 4, ширина 4) -> 16
-	height3 := []int{4, 3, 2, 1, 4}
-	printTest(height3, 16, 3)
+	// ТЕСТ 3: Не та пара
+	printTest("(]", false, 3)
+
+	// ТЕСТ 4: Правильная вложенность
+	printTest("{[]}", true, 4)
+
+	// ТЕСТ 5: Лишняя открывающая (стек не пуст в конце)
+	printTest("[", false, 5)
+
+	// ТЕСТ 6: Лишняя закрывающая (стек пуст, а мы хотим попнуть)
+	printTest("]", false, 6)
 }
 
-func printTest(input []int, expected, testNum int) {
+func printTest(input string, expected bool, testNum int) {
 	fmt.Printf("--- Test %d ---\n", testNum)
-	fmt.Printf("Input: %v\n", input)
+	fmt.Printf("Input: \"%s\"\n", input)
 
-	result := leetcode.MaxArea(input)
-	fmt.Printf("Result: %d (Expected: %d)\n", result, expected)
+	result := leetcode.IsValid(input)
+	fmt.Printf("Result: %v (Expected: %v)\n", result, expected)
 
 	if result == expected {
 		fmt.Println("✅ PASSED")
