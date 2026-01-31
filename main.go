@@ -6,19 +6,31 @@ import (
 )
 
 func main() {
-	// ТЕСТ 1: Покупка за 1, продажа за 6 -> 5
-	prices1 := []int{7, 1, 5, 3, 6, 4}
-	printTest(prices1, 5, 1)
+	// ТЕСТ 1: Классика (ответ 3 -> "abc")
+	printTest("abcabcbb", 3, 1)
 
-	// ТЕСТ 2: Цены падают (7->6->4...), прибыли нет -> 0
-	prices2 := []int{7, 6, 4, 3, 1}
-	printTest(prices2, 0, 2)
+	// ТЕСТ 2: Все одинаковые (ответ 1 -> "b")
+	printTest("bbbbb", 1, 2)
+
+	// ТЕСТ 3: Ответ в конце и с перехлестом (ответ 3 -> "wke")
+	// Подстрока обязательно должна быть слитной, "pwke" - это подпоследовательность, не считается.
+	printTest("pwwkew", 3, 3)
+
+	// ТЕСТ 4: Пустая строка
+	printTest("", 0, 4)
+
+	// ТЕСТ 5: Пробелы тоже символы
+	printTest(" ", 1, 5)
+
+	// ТЕСТ 6:
+	printTest("qrsvbspk", 5, 6)
 }
 
-func printTest(input []int, expected, testNum int) {
+func printTest(input string, expected, testNum int) {
 	fmt.Printf("--- Test %d ---\n", testNum)
-	result := leetcode.MaxProfit(input)
-	fmt.Printf("Input: %v | Result: %d (Expected: %d)\n", input, result, expected)
+	result := leetcode.LengthOfLongestSubstring(input)
+	fmt.Printf("Input: \"%s\" | Result: %d (Expected: %d)\n", input, result, expected)
+
 	if result == expected {
 		fmt.Println("✅ PASSED")
 	} else {
