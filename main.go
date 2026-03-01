@@ -2,39 +2,38 @@ package main
 
 import (
 	"fmt"
-	"neetcode/leetcode"
+	"neetcode/additional" // Проверь свой импорт, если нужно
 )
 
 func main() {
-	// ТЕСТ 1: Заменяем 2 символа
-	// ABAB, k=2 -> BBBB (4)
-	printTest("ABAB", 2, 4, 1)
+	// ТЕСТ 1: Обычный случай со всеми вариантами
+	printTest("AAAABBBCCXYZ", "A4B3C2XYZ", 1)
 
-	// ТЕСТ 2: Заменяем 1 символ
-	// AABABBA, k=1 -> AAAABBA (4)
-	printTest("AABABBA", 1, 4, 2)
+	// ТЕСТ 2: Одиночные символы в начале и середине
+	printTest("ABBBCHHH", "AB3CH3", 2)
 
-	// ТЕСТ 3: k=0 (замены запрещены)
-	// ABCDE -> 1
-	printTest("ABCDE", 0, 1, 3)
+	// ТЕСТ 3: Тот самый "потерянный хвост" (одиночный символ в конце)
+	printTest("AAAB", "A3B", 3)
 
-	// ТЕСТ 4: Одна буква
-	printTest("A", 2, 1, 4)
+	// ТЕСТ 4: Пустая строка
+	printTest("", "", 4)
 
-	// ТЕСТ 5: Строка из одинаковых букв
-	printTest("AAAA", 2, 4, 5)
+	// ТЕСТ 5: Строка из одного символа
+	printTest("A", "A", 5)
 
-	// ТЕСТ 6: Замены позволяют объединить две группы
-	// AAABBAAA, k=2 -> AAAAAAAA (8)
-	printTest("AAABBAAA", 2, 8, 6)
+	// ТЕСТ 6: Все символы уникальные (худший случай для RLE)
+	printTest("ABCDE", "ABCDE", 6)
+
+	// ТЕСТ 7: Длинная последовательность (двузначное число > 9)
+	printTest("AAAAAAAAAAAAA", "A13", 7)
 }
 
-func printTest(s string, k, expected, testNum int) {
+func printTest(s, expected string, testNum int) {
 	fmt.Printf("--- Test %d ---\n", testNum)
 
-	result := leetcode.CharacterReplacement(s, k)
+	result := additional.RLE(s)
 
-	fmt.Printf("Input: s=\"%s\", k=%d | Result: %d (Expected: %d)\n", s, k, result, expected)
+	fmt.Printf("Input: \"%s\"\nResult: \"%s\" (Expected: \"%s\")\n", s, result, expected)
 
 	if result == expected {
 		fmt.Println("✅ PASSED")
