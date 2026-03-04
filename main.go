@@ -8,21 +8,44 @@ import (
 type TreeNode = leetcode.TreeNode
 
 func main() {
-	// ТЕСТ 1: Идентичные деревья [1, 2, 3]
-	p1 := &TreeNode{Val: 1, Left: &TreeNode{Val: 2}, Right: &TreeNode{Val: 3}}
-	q1 := &TreeNode{Val: 1, Left: &TreeNode{Val: 2}, Right: &TreeNode{Val: 3}}
+	// ТЕСТ 1: subRoot действительно является поддеревом
+	// root: [3, 4, 5, 1, 2]
+	// subRoot: [4, 1, 2]
+	root1 := &TreeNode{
+		Val: 3,
+		Left: &TreeNode{
+			Val:   4,
+			Left:  &TreeNode{Val: 1},
+			Right: &TreeNode{Val: 2},
+		},
+		Right: &TreeNode{Val: 5},
+	}
+	subRoot1 := &TreeNode{
+		Val:   4,
+		Left:  &TreeNode{Val: 1},
+		Right: &TreeNode{Val: 2},
+	}
 
-	// ТЕСТ 2: Разная структура [1, 2] и [1, nil, 2]
-	p2 := &TreeNode{Val: 1, Left: &TreeNode{Val: 2}}
-	q2 := &TreeNode{Val: 1, Right: &TreeNode{Val: 2}}
+	// ТЕСТ 2: Значения совпадают, но структура поддерева в root шире
+	// root: [3, 4, 5, 1, 2, nil, nil, 0] (у узла 2 есть ребенок 0)
+	// subRoot: [4, 1, 2]
+	// Ожидаем false, так как в основном дереве у "двойки" есть продолжение
+	root2 := &TreeNode{
+		Val: 3,
+		Left: &TreeNode{
+			Val:  4,
+			Left: &TreeNode{Val: 1},
+			Right: &TreeNode{
+				Val:  2,
+				Left: &TreeNode{Val: 0},
+			},
+		},
+		Right: &TreeNode{Val: 5},
+	}
+	subRoot2 := subRoot1 // Те же [4, 1, 2]
 
-	// ТЕСТ 3: Одинаковая структура, разные значения [1, 2, 1] и [1, 1, 2]
-	p3 := &TreeNode{Val: 1, Left: &TreeNode{Val: 2}, Right: &TreeNode{Val: 1}}
-	q3 := &TreeNode{Val: 1, Left: &TreeNode{Val: 1}, Right: &TreeNode{Val: 2}}
-
-	fmt.Println("🌳 Проверка Same Tree (#100):")
+	fmt.Println("🌳 Проверка Subtree of Another Tree (#572):")
 	fmt.Println("---")
-	fmt.Printf("Тест 1 (Идентичные): %v (Ожидаем true)\n", leetcode.IsSameTree(p1, q1))
-	fmt.Printf("Тест 2 (Структура):  %v (Ожидаем false)\n", leetcode.IsSameTree(p2, q2))
-	fmt.Printf("Тест 3 (Значения):   %v (Ожидаем false)\n", leetcode.IsSameTree(p3, q3))
+	fmt.Printf("Тест 1 (Является): %v (Ожидаем true)\n", leetcode.IsSubtree(root1, subRoot1))
+	fmt.Printf("Тест 2 (Не является): %v (Ожидаем false)\n", leetcode.IsSubtree(root2, subRoot2))
 }
