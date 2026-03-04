@@ -2,55 +2,27 @@ package main
 
 import (
 	"fmt"
-	"neetcode/leetcode" // Твой путь к пакету
-	"reflect"
+	"neetcode/leetcode" // Замени на свой путь к пакету
 )
 
 type TreeNode = leetcode.TreeNode
 
 func main() {
-	// ТЕСТ 1: Классическое дерево
-	//      3
-	//     / \
-	//    9  20
-	//      /  \
-	//     15   7
-	// Ожидаем: [[3], [9, 20], [15, 7]]
-	root1 := &TreeNode{
-		Val:  3,
-		Left: &TreeNode{Val: 9},
-		Right: &TreeNode{
-			Val:   20,
-			Left:  &TreeNode{Val: 15},
-			Right: &TreeNode{Val: 7},
-		},
-	}
+	// ТЕСТ 1: Идентичные деревья [1, 2, 3]
+	p1 := &TreeNode{Val: 1, Left: &TreeNode{Val: 2}, Right: &TreeNode{Val: 3}}
+	q1 := &TreeNode{Val: 1, Left: &TreeNode{Val: 2}, Right: &TreeNode{Val: 3}}
 
-	// ТЕСТ 2: Один узел
-	// Ожидаем: [[1]]
-	root2 := &TreeNode{Val: 1}
+	// ТЕСТ 2: Разная структура [1, 2] и [1, nil, 2]
+	p2 := &TreeNode{Val: 1, Left: &TreeNode{Val: 2}}
+	q2 := &TreeNode{Val: 1, Right: &TreeNode{Val: 2}}
 
-	// ТЕСТ 3: Пустое дерево
-	// Ожидаем: []
-	var root3 *TreeNode = nil
+	// ТЕСТ 3: Одинаковая структура, разные значения [1, 2, 1] и [1, 1, 2]
+	p3 := &TreeNode{Val: 1, Left: &TreeNode{Val: 2}, Right: &TreeNode{Val: 1}}
+	q3 := &TreeNode{Val: 1, Left: &TreeNode{Val: 1}, Right: &TreeNode{Val: 2}}
 
-	tests := []struct {
-		name     string
-		root     *TreeNode
-		expected [][]int
-	}{
-		{"Standard Tree", root1, [][]int{{3}, {9, 20}, {15, 7}}},
-		{"Single Node", root2, [][]int{{1}}},
-		{"Empty Tree", root3, [][]int{}},
-	}
-
-	fmt.Println("🚀 Тестируем Level Order Traversal...")
-	for _, tt := range tests {
-		result := leetcode.LevelOrder(tt.root)
-		if reflect.DeepEqual(result, tt.expected) {
-			fmt.Printf("✅ %s: %v\n", tt.name, result)
-		} else {
-			fmt.Printf("❌ %s: Ожидали %v, получили %v\n", tt.name, tt.expected, result)
-		}
-	}
+	fmt.Println("🌳 Проверка Same Tree (#100):")
+	fmt.Println("---")
+	fmt.Printf("Тест 1 (Идентичные): %v (Ожидаем true)\n", leetcode.IsSameTree(p1, q1))
+	fmt.Printf("Тест 2 (Структура):  %v (Ожидаем false)\n", leetcode.IsSameTree(p2, q2))
+	fmt.Printf("Тест 3 (Значения):   %v (Ожидаем false)\n", leetcode.IsSameTree(p3, q3))
 }
