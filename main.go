@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"neetcode/leetcode" // Замени на свой путь к пакету
+	"neetcode/leetcode" // Твой путь к пакету
+	"reflect"
 )
 
 type TreeNode = leetcode.TreeNode
@@ -14,7 +15,7 @@ func main() {
 	//    9  20
 	//      /  \
 	//     15   7
-	// Ожидаемый результат: 3
+	// Ожидаем: [[3], [9, 20], [15, 7]]
 	root1 := &TreeNode{
 		Val:  3,
 		Left: &TreeNode{Val: 9},
@@ -25,28 +26,31 @@ func main() {
 		},
 	}
 
-	// ТЕСТ 2: Дерево-палка (вырожденное)
-	//  1
-	//   \
-	//    2
-	//     \
-	//      3
-	// Ожидаемый результат: 3
-	root2 := &TreeNode{
-		Val: 1,
-		Right: &TreeNode{
-			Val:   2,
-			Right: &TreeNode{Val: 3},
-		},
-	}
+	// ТЕСТ 2: Один узел
+	// Ожидаем: [[1]]
+	root2 := &TreeNode{Val: 1}
 
 	// ТЕСТ 3: Пустое дерево
-	// Ожидаемый результат: 0
+	// Ожидаем: []
 	var root3 *TreeNode = nil
 
-	fmt.Println("🌳 Тестируем MaxDepth...")
+	tests := []struct {
+		name     string
+		root     *TreeNode
+		expected [][]int
+	}{
+		{"Standard Tree", root1, [][]int{{3}, {9, 20}, {15, 7}}},
+		{"Single Node", root2, [][]int{{1}}},
+		{"Empty Tree", root3, [][]int{}},
+	}
 
-	fmt.Printf("Тест 1 (Сбалансированное): %d (Ожидаем 3)\n", leetcode.MaxDepth(root1))
-	fmt.Printf("Тест 2 (Палка):            %d (Ожидаем 3)\n", leetcode.MaxDepth(root2))
-	fmt.Printf("Тест 3 (Пустое):           %d (Ожидаем 0)\n", leetcode.MaxDepth(root3))
+	fmt.Println("🚀 Тестируем Level Order Traversal...")
+	for _, tt := range tests {
+		result := leetcode.LevelOrder(tt.root)
+		if reflect.DeepEqual(result, tt.expected) {
+			fmt.Printf("✅ %s: %v\n", tt.name, result)
+		} else {
+			fmt.Printf("❌ %s: Ожидали %v, получили %v\n", tt.name, tt.expected, result)
+		}
+	}
 }
