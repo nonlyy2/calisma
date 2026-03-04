@@ -1,7 +1,7 @@
 package leetcode
 
-// Задача №226: Invert Binary Tree
-// https://leetcode.com/problems/invert-binary-tree/
+// Задача №104: Maximum Depth of Binary Tree
+// https://leetcode.com/problems/maximum-depth-of-binary-tree/
 
 func MaxDepth(root *TreeNode) int {
 	if root == nil {
