@@ -8,34 +8,41 @@ import (
 type TreeNode = leetcode.TreeNode
 
 func main() {
-	// Построим BST:
-	//        6
-	//      /   \
-	//     2     8
-	//    / \   / \
-	//   0   4 7   9
-	//      / \
-	//     3   5
+	// ТЕСТ 1: Валидное дерево
+	//      2
+	//     / \
+	//    1   3
+	root1 := &TreeNode{
+		Val:   2,
+		Left:  &TreeNode{Val: 1},
+		Right: &TreeNode{Val: 3},
+	}
 
-	n3 := &TreeNode{Val: 3}
-	n5 := &TreeNode{Val: 5}
-	n4 := &TreeNode{Val: 4, Left: n3, Right: n5}
-	n0 := &TreeNode{Val: 0}
-	n2 := &TreeNode{Val: 2, Left: n0, Right: n4}
+	// ТЕСТ 2: Невалидное дерево (ловушка!)
+	//      5
+	//     / \
+	//    1   6
+	//       / \
+	//      4   7
+	// Узел 4 находится в правой ветке от 5, значит он ДОЛЖЕН быть больше 5.
+	// Но 4 < 5, значит это не BST.
+	root2 := &TreeNode{
+		Val:  5,
+		Left: &TreeNode{Val: 1},
+		Right: &TreeNode{
+			Val:   6,
+			Left:  &TreeNode{Val: 4},
+			Right: &TreeNode{Val: 7},
+		},
+	}
 
-	n7 := &TreeNode{Val: 7}
-	n9 := &TreeNode{Val: 9}
-	n8 := &TreeNode{Val: 8, Left: n7, Right: n9}
+	// ТЕСТ 3: Дерево с дубликатом
+	// В правильном BST значения должны быть строго больше/меньше.
+	root3 := &TreeNode{Val: 1, Left: &TreeNode{Val: 1}}
 
-	root := &TreeNode{Val: 6, Left: n2, Right: n8}
-
-	fmt.Println("🌳 Тестируем Lowest Common Ancestor в BST...")
-
-	// Тест 1: LCA для 2 и 8 — это корень (6)
-	res1 := leetcode.LowestCommonAncestor(root, n2, n8)
-	fmt.Printf("LCA(2, 8): %d (Ожидаем 6)\n", res1.Val)
-
-	// Тест 2: LCA для 2 и 4 — это сам узел 2
-	res2 := leetcode.LowestCommonAncestor(root, n2, n4)
-	fmt.Printf("LCA(2, 4): %d (Ожидаем 2)\n", res2.Val)
+	fmt.Println("🌳 Тестируем Validate BST (#98)...")
+	fmt.Println("---")
+	fmt.Printf("Тест 1 (Валидное):    %v (Ожидаем true)\n", leetcode.IsValidBST(root1))
+	fmt.Printf("Тест 2 (Нарушение):   %v (Ожидаем false)\n", leetcode.IsValidBST(root2))
+	fmt.Printf("Тест 3 (Дубликат):    %v (Ожидаем false)\n", leetcode.IsValidBST(root3))
 }
