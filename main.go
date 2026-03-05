@@ -2,50 +2,40 @@ package main
 
 import (
 	"fmt"
-	"neetcode/leetcode" // Замени на свой путь к пакету
+	"neetcode/leetcode"
 )
 
 type TreeNode = leetcode.TreeNode
 
 func main() {
-	// ТЕСТ 1: subRoot действительно является поддеревом
-	// root: [3, 4, 5, 1, 2]
-	// subRoot: [4, 1, 2]
-	root1 := &TreeNode{
-		Val: 3,
-		Left: &TreeNode{
-			Val:   4,
-			Left:  &TreeNode{Val: 1},
-			Right: &TreeNode{Val: 2},
-		},
-		Right: &TreeNode{Val: 5},
-	}
-	subRoot1 := &TreeNode{
-		Val:   4,
-		Left:  &TreeNode{Val: 1},
-		Right: &TreeNode{Val: 2},
-	}
+	// Построим BST:
+	//        6
+	//      /   \
+	//     2     8
+	//    / \   / \
+	//   0   4 7   9
+	//      / \
+	//     3   5
 
-	// ТЕСТ 2: Значения совпадают, но структура поддерева в root шире
-	// root: [3, 4, 5, 1, 2, nil, nil, 0] (у узла 2 есть ребенок 0)
-	// subRoot: [4, 1, 2]
-	// Ожидаем false, так как в основном дереве у "двойки" есть продолжение
-	root2 := &TreeNode{
-		Val: 3,
-		Left: &TreeNode{
-			Val:  4,
-			Left: &TreeNode{Val: 1},
-			Right: &TreeNode{
-				Val:  2,
-				Left: &TreeNode{Val: 0},
-			},
-		},
-		Right: &TreeNode{Val: 5},
-	}
-	subRoot2 := subRoot1 // Те же [4, 1, 2]
+	n3 := &TreeNode{Val: 3}
+	n5 := &TreeNode{Val: 5}
+	n4 := &TreeNode{Val: 4, Left: n3, Right: n5}
+	n0 := &TreeNode{Val: 0}
+	n2 := &TreeNode{Val: 2, Left: n0, Right: n4}
 
-	fmt.Println("🌳 Проверка Subtree of Another Tree (#572):")
-	fmt.Println("---")
-	fmt.Printf("Тест 1 (Является): %v (Ожидаем true)\n", leetcode.IsSubtree(root1, subRoot1))
-	fmt.Printf("Тест 2 (Не является): %v (Ожидаем false)\n", leetcode.IsSubtree(root2, subRoot2))
+	n7 := &TreeNode{Val: 7}
+	n9 := &TreeNode{Val: 9}
+	n8 := &TreeNode{Val: 8, Left: n7, Right: n9}
+
+	root := &TreeNode{Val: 6, Left: n2, Right: n8}
+
+	fmt.Println("🌳 Тестируем Lowest Common Ancestor в BST...")
+
+	// Тест 1: LCA для 2 и 8 — это корень (6)
+	res1 := leetcode.LowestCommonAncestor(root, n2, n8)
+	fmt.Printf("LCA(2, 8): %d (Ожидаем 6)\n", res1.Val)
+
+	// Тест 2: LCA для 2 и 4 — это сам узел 2
+	res2 := leetcode.LowestCommonAncestor(root, n2, n4)
+	fmt.Printf("LCA(2, 4): %d (Ожидаем 2)\n", res2.Val)
 }
