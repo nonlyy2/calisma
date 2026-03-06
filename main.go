@@ -3,31 +3,45 @@ package main
 import (
 	"fmt"
 	"neetcode/leetcode" // Замени на свой путь к пакету
+	"reflect"
 )
 
 func main() {
 	testCases := []struct {
-		s        string
-		t        string
-		expected bool
+		nums     []int
+		expected []string
 	}{
-		{s: "egg", t: "add", expected: true},
-		{s: "foo", t: "bar", expected: false},
-		{s: "paper", t: "title", expected: true},
-		{s: "badc", t: "baba", expected: false}, // Ловушка на обратный маппинг
-		{s: "ab", t: "aa", expected: false},
+		{
+			nums:     []int{0, 1, 2, 4, 5, 7},
+			expected: []string{"0->2", "4->5", "7"},
+		},
+		{
+			nums:     []int{0, 2, 3, 4, 6, 8, 9},
+			expected: []string{"0", "2->4", "6", "8->9"},
+		},
+		{
+			nums:     []int{},
+			expected: []string{},
+		},
+		{
+			nums:     []int{-1},
+			expected: []string{"-1"},
+		},
+		{
+			nums:     []int{-5, -4, -3, 0, 1, 5},
+			expected: []string{"-5->-3", "0->1", "5"},
+		},
 	}
 
-	fmt.Println("🔍 Тестируем Isomorphic Strings (#205)...")
+	fmt.Println("🔍 Тестируем Summary Ranges (#228)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.IsIsomorphic(tc.s, tc.t)
-		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден (\"%s\" -> \"%s\")\n", i+1, tc.s, tc.t)
+		result := leetcode.SummaryRanges(tc.nums)
+		if reflect.DeepEqual(result, tc.expected) {
+			fmt.Printf("Тест %d: ✅ Пройден (nums=%v)\n", i+1, tc.nums)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v (\"%s\" -> \"%s\")\n",
-				i+1, tc.expected, result, tc.s, tc.t)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, result)
 		}
 	}
 }
