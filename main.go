@@ -2,47 +2,52 @@ package main
 
 import (
 	"fmt"
-	"neetcode/leetcode"
+	"neetcode/leetcode" // Замени на свой путь к пакету
+	"reflect"
 )
 
-type TreeNode = leetcode.TreeNode
-
 func main() {
-	// ТЕСТ 1: Валидное дерево
-	//      2
-	//     / \
-	//    1   3
-	root1 := &TreeNode{
-		Val:   2,
-		Left:  &TreeNode{Val: 1},
-		Right: &TreeNode{Val: 3},
-	}
-
-	// ТЕСТ 2: Невалидное дерево (ловушка!)
-	//      5
-	//     / \
-	//    1   6
-	//       / \
-	//      4   7
-	// Узел 4 находится в правой ветке от 5, значит он ДОЛЖЕН быть больше 5.
-	// Но 4 < 5, значит это не BST.
-	root2 := &TreeNode{
-		Val:  5,
-		Left: &TreeNode{Val: 1},
-		Right: &TreeNode{
-			Val:   6,
-			Left:  &TreeNode{Val: 4},
-			Right: &TreeNode{Val: 7},
+	testCases := []struct {
+		arr      []int
+		k        int
+		x        int
+		expected []int
+	}{
+		{
+			arr:      []int{1, 2, 3, 4, 5},
+			k:        4,
+			x:        3,
+			expected: []int{1, 2, 3, 4},
+		},
+		{
+			arr:      []int{1, 2, 3, 4, 5},
+			k:        4,
+			x:        -1,
+			expected: []int{1, 2, 3, 4},
+		},
+		{
+			arr:      []int{1, 1, 1, 10, 10, 10},
+			k:        1,
+			x:        9,
+			expected: []int{10},
+		},
+		{
+			arr:      []int{0, 0, 1, 2, 3, 3, 4, 7, 7, 8},
+			k:        3,
+			x:        5,
+			expected: []int{3, 3, 4},
 		},
 	}
 
-	// ТЕСТ 3: Дерево с дубликатом
-	// В правильном BST значения должны быть строго больше/меньше.
-	root3 := &TreeNode{Val: 1, Left: &TreeNode{Val: 1}}
-
-	fmt.Println("🌳 Тестируем Validate BST (#98)...")
+	fmt.Println("🔍 Тестируем Find K Closest Elements (#658)...")
 	fmt.Println("---")
-	fmt.Printf("Тест 1 (Валидное):    %v (Ожидаем true)\n", leetcode.IsValidBST(root1))
-	fmt.Printf("Тест 2 (Нарушение):   %v (Ожидаем false)\n", leetcode.IsValidBST(root2))
-	fmt.Printf("Тест 3 (Дубликат):    %v (Ожидаем false)\n", leetcode.IsValidBST(root3))
+
+	for i, tc := range testCases {
+		result := leetcode.FindClosestElements(tc.arr, tc.k, tc.x)
+		if reflect.DeepEqual(result, tc.expected) {
+			fmt.Printf("Тест %d: ✅ Пройден (k=%d, x=%d)\n", i+1, tc.k, tc.x)
+		} else {
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, result)
+		}
+	}
 }
