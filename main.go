@@ -3,51 +3,31 @@ package main
 import (
 	"fmt"
 	"neetcode/leetcode" // Замени на свой путь к пакету
-	"reflect"
 )
 
 func main() {
 	testCases := []struct {
-		arr      []int
-		k        int
-		x        int
-		expected []int
+		s        string
+		t        string
+		expected bool
 	}{
-		{
-			arr:      []int{1, 2, 3, 4, 5},
-			k:        4,
-			x:        3,
-			expected: []int{1, 2, 3, 4},
-		},
-		{
-			arr:      []int{1, 2, 3, 4, 5},
-			k:        4,
-			x:        -1,
-			expected: []int{1, 2, 3, 4},
-		},
-		{
-			arr:      []int{1, 1, 1, 10, 10, 10},
-			k:        1,
-			x:        9,
-			expected: []int{10},
-		},
-		{
-			arr:      []int{0, 0, 1, 2, 3, 3, 4, 7, 7, 8},
-			k:        3,
-			x:        5,
-			expected: []int{3, 3, 4},
-		},
+		{s: "egg", t: "add", expected: true},
+		{s: "foo", t: "bar", expected: false},
+		{s: "paper", t: "title", expected: true},
+		{s: "badc", t: "baba", expected: false}, // Ловушка на обратный маппинг
+		{s: "ab", t: "aa", expected: false},
 	}
 
-	fmt.Println("🔍 Тестируем Find K Closest Elements (#658)...")
+	fmt.Println("🔍 Тестируем Isomorphic Strings (#205)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.FindClosestElements(tc.arr, tc.k, tc.x)
-		if reflect.DeepEqual(result, tc.expected) {
-			fmt.Printf("Тест %d: ✅ Пройден (k=%d, x=%d)\n", i+1, tc.k, tc.x)
+		result := leetcode.IsIsomorphic(tc.s, tc.t)
+		if result == tc.expected {
+			fmt.Printf("Тест %d: ✅ Пройден (\"%s\" -> \"%s\")\n", i+1, tc.s, tc.t)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v (\"%s\" -> \"%s\")\n",
+				i+1, tc.expected, result, tc.s, tc.t)
 		}
 	}
 }
