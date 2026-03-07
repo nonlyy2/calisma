@@ -2,32 +2,30 @@ package main
 
 import (
 	"fmt"
-	"neetcode/leetcode" // Замени на свой путь
+	"neetcode/leetcode"
 )
 
 func main() {
 	testCases := []struct {
-		s        string
-		t        string
-		expected bool
+		nums     []int
+		expected int
 	}{
-		{s: "abc", t: "ahbgdc", expected: true},
-		{s: "axc", t: "ahbgdc", expected: false},
-		{s: "", t: "ahbgdc", expected: true}, // Пустая строка - всегда подпоследовательность
-		{s: "abc", t: "", expected: false},
-		{s: "aaaaaa", t: "bbaaaa", expected: false},
-		{s: "aec", t: "abcde", expected: false}, // Порядок важен!
+		{nums: []int{1, 4, 3, 3, 2}, expected: 2}, // [1,4] или [3,2]
+		{nums: []int{3, 3, 3, 3}, expected: 1},    // Нет строгого возрастания/убывания
+		{nums: []int{3, 2, 1}, expected: 3},       // Строго убывает
+		{nums: []int{1, 2, 3, 4, 5}, expected: 5}, // Строго возрастает
+		{nums: []int{1, 5, 2, 7, 3}, expected: 2},
 	}
 
-	fmt.Println("🔍 Тестируем Is Subsequence (#392)...")
+	fmt.Println("🔍 Тестируем Longest Subarray (#3105)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.IsSubsequence(tc.s, tc.t)
+		result := leetcode.LongestMonotonicSubarray(tc.nums)
 		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден (s=\"%s\", t=\"%s\")\n", i+1, tc.s, tc.t)
+			fmt.Printf("Тест %d: ✅ Пройден (nums=%v)\n", i+1, tc.nums)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %d, получили %d\n", i+1, tc.expected, result)
 		}
 	}
 }
