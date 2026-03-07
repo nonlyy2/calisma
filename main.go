@@ -8,49 +8,48 @@ import (
 
 func main() {
 	testCases := []struct {
-		s        string
-		p        string
-		expected []int
+		firstList  [][]int
+		secondList [][]int
+		expected   [][]int
 	}{
 		{
-			s:        "cbaebabacd",
-			p:        "abc",
-			expected: []int{0, 6}, // "cba" на 0 индексе, "bac" на 6-м
+			// Стандартный случай: частичные пересечения, точки (5,5), (24,24)
+			firstList:  [][]int{{0, 2}, {5, 10}, {13, 23}, {24, 25}},
+			secondList: [][]int{{1, 5}, {8, 12}, {15, 24}, {25, 26}},
+			expected:   [][]int{{1, 2}, {5, 5}, {8, 10}, {15, 23}, {24, 24}, {25, 25}},
 		},
 		{
-			s:        "abab",
-			p:        "ab",
-			expected: []int{0, 1, 2}, // "ab", "ba", "ab" — окна могут пересекаться!
+			// Один список пуст
+			firstList:  [][]int{{1, 3}, {5, 9}},
+			secondList: [][]int{},
+			expected:   [][]int{},
 		},
 		{
-			s:        "af",
-			p:        "be",
-			expected: []int{}, // Анаграмм нет
+			// Один интервал полностью поглощает другой
+			firstList:  [][]int{{1, 10}},
+			secondList: [][]int{{4, 5}, {7, 8}},
+			expected:   [][]int{{4, 5}, {7, 8}},
 		},
 		{
-			s:        "aaaaaaaaaa",
-			p:        "aaaaaaaaaa",
-			expected: []int{0},
-		},
-		{
-			s:        "abc",
-			p:        "abcd",
-			expected: []int{}, // p длиннее чем s — сразу пустой результат
+			// Интервалы касаются только границами
+			firstList:  [][]int{{1, 2}, {3, 4}},
+			secondList: [][]int{{2, 3}},
+			expected:   [][]int{{2, 2}, {3, 3}},
 		},
 	}
 
-	fmt.Println("🔍 Тестируем Find All Anagrams (#438)...")
+	fmt.Println("📅 Тестируем Interval List Intersections (#986)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.FindAnagrams(tc.s, tc.p)
+		result := leetcode.IntervalIntersection(tc.firstList, tc.secondList)
 
-		// Используем reflect.DeepEqual для сравнения слайсов
-		if (len(result) == 0 && len(tc.expected) == 0) || reflect.DeepEqual(result, tc.expected) {
-			fmt.Printf("Тест %d: ✅ Пройден (s=\"%s\", p=\"%s\")\n", i+1, tc.s, tc.p)
+		// Для вывода в консоль при ошибке
+		if reflect.DeepEqual(result, tc.expected) {
+			fmt.Printf("Тест %d: ✅ Пройден\n", i+1)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v (s=\"%s\", p=\"%s\")\n",
-				i+1, tc.expected, result, tc.s, tc.p)
+			fmt.Printf("Тест %d: ❌ Ошибка!\n   First:  %v\n   Second: %v\n   Ожидали: %v\n   Получили: %v\n",
+				i+1, tc.firstList, tc.secondList, tc.expected, result)
 		}
 	}
 }
