@@ -7,49 +7,26 @@ import (
 
 func main() {
 	testCases := []struct {
-		grid     [][]int
+		s        string
 		expected int
 	}{
-		{
-			grid: [][]int{
-				{0, 0, 1, 0, 0},
-				{0, 1, 1, 0, 1},
-				{0, 1, 0, 0, 1},
-				{0, 0, 0, 1, 1},
-			},
-			expected: 4, // Остров в середине (3 клетки) и остров в углу (4 клетки)
-		},
-		{
-			grid: [][]int{
-				{0, 0, 0, 0, 0},
-			},
-			expected: 0,
-		},
-		{
-			grid: [][]int{
-				{1, 1, 0, 1, 1},
-				{1, 1, 0, 1, 1},
-			},
-			expected: 4,
-		},
+		{s: "3+2*2", expected: 7},
+		{s: " 3/2 ", expected: 1},
+		{s: " 3+5 / 2 ", expected: 5},
+		{s: "10-2*3+4", expected: 8},
+		{s: "42", expected: 42},
+		{s: "1-1+1", expected: 1},
 	}
 
-	fmt.Println("🌊 Тестируем Max Area of Island (#695)...")
+	fmt.Println("🧮 Тестируем Basic Calculator II (#227)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		// Копируем, чтобы не портить оригинал для других тестов
-		gridCopy := make([][]int, len(tc.grid))
-		for j := range tc.grid {
-			gridCopy[j] = make([]int, len(tc.grid[j]))
-			copy(gridCopy[j], tc.grid[j])
-		}
-
-		result := leetcode.MaxAreaOfIsland(gridCopy)
+		result := leetcode.Calculate(tc.s)
 		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ (Max Area: %d)\n", i+1, result)
+			fmt.Printf("Тест %d: ✅ Пройден (\"%s\" = %d)\n", i+1, tc.s, result)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %d, получили %d\n", i+1, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! (\"%s\") Ожидали %d, получили %d\n", i+1, tc.s, tc.expected, result)
 		}
 	}
 }
