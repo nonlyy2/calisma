@@ -3,29 +3,54 @@ package main
 import (
 	"fmt"
 	"neetcode/leetcode"
+	"reflect"
 )
 
 func main() {
 	testCases := []struct {
-		nums     []int
-		expected int
+		s        string
+		p        string
+		expected []int
 	}{
-		{nums: []int{1, 4, 3, 3, 2}, expected: 2}, // [1,4] или [3,2]
-		{nums: []int{3, 3, 3, 3}, expected: 1},    // Нет строгого возрастания/убывания
-		{nums: []int{3, 2, 1}, expected: 3},       // Строго убывает
-		{nums: []int{1, 2, 3, 4, 5}, expected: 5}, // Строго возрастает
-		{nums: []int{1, 5, 2, 7, 3}, expected: 2},
+		{
+			s:        "cbaebabacd",
+			p:        "abc",
+			expected: []int{0, 6}, // "cba" на 0 индексе, "bac" на 6-м
+		},
+		{
+			s:        "abab",
+			p:        "ab",
+			expected: []int{0, 1, 2}, // "ab", "ba", "ab" — окна могут пересекаться!
+		},
+		{
+			s:        "af",
+			p:        "be",
+			expected: []int{}, // Анаграмм нет
+		},
+		{
+			s:        "aaaaaaaaaa",
+			p:        "aaaaaaaaaa",
+			expected: []int{0},
+		},
+		{
+			s:        "abc",
+			p:        "abcd",
+			expected: []int{}, // p длиннее чем s — сразу пустой результат
+		},
 	}
 
-	fmt.Println("🔍 Тестируем Longest Subarray (#3105)...")
+	fmt.Println("🔍 Тестируем Find All Anagrams (#438)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.LongestMonotonicSubarray(tc.nums)
-		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден (nums=%v)\n", i+1, tc.nums)
+		result := leetcode.FindAnagrams(tc.s, tc.p)
+
+		// Используем reflect.DeepEqual для сравнения слайсов
+		if (len(result) == 0 && len(tc.expected) == 0) || reflect.DeepEqual(result, tc.expected) {
+			fmt.Printf("Тест %d: ✅ Пройден (s=\"%s\", p=\"%s\")\n", i+1, tc.s, tc.p)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %d, получили %d\n", i+1, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v (s=\"%s\", p=\"%s\")\n",
+				i+1, tc.expected, result, tc.s, tc.p)
 		}
 	}
 }
