@@ -7,25 +7,45 @@ import (
 
 func main() {
 	testCases := []struct {
-		s        string
-		expected bool
+		seats    []int
+		expected int
 	}{
-		{s: "aba", expected: true},                     // Уже палиндром
-		{s: "abca", expected: true},                    // Удаляем 'c' (или 'b') -> "aba" или "aca"
-		{s: "abc", expected: false},                    // Удаление одного символа не спасет
-		{s: "eeccccbebaeeabebccceea", expected: false}, // Сложный тест на длинную строку
-		{s: "cbbcc", expected: true},                   // Удаляем первую 'c' -> "bbcc" (нет), удаляем последнюю 'c' -> "cbbc" (да!)
+		{
+			// Классический случай: садимся посередине (индекс 2)
+			seats:    []int{1, 0, 0, 0, 1, 0, 1},
+			expected: 2,
+		},
+		{
+			// Краевой случай 1: нули в самом конце. Садимся на последний стул (индекс 3)
+			seats:    []int{1, 0, 0, 0},
+			expected: 3,
+		},
+		{
+			// Краевой случай 2: нули в самом начале. Садимся на первый стул (индекс 0)
+			seats:    []int{0, 0, 1},
+			expected: 2,
+		},
+		{
+			// Минимально возможное окно
+			seats:    []int{1, 0, 1},
+			expected: 1,
+		},
+		{
+			// Длинная пустая дистанция с краю
+			seats:    []int{0, 0, 0, 0, 1, 0, 1},
+			expected: 4,
+		},
 	}
 
-	fmt.Println("🔍 Тестируем Valid Palindrome II (#680)...")
+	fmt.Println("🍿 Тестируем Maximize Distance to Closest Person (#849)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.ValidPalindrome(tc.s)
+		result := leetcode.MaxDistToClosest(tc.seats)
 		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден (\"%s\")\n", i+1, tc.s)
+			fmt.Printf("Тест %d: ✅ Пройден (Макс. дистанция: %d)\n", i+1, result)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Строка: \"%s\". Ожидали %v, получили %v\n", i+1, tc.s, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! Места: %v. Ожидали %d, получили %d\n", i+1, tc.seats, tc.expected, result)
 		}
 	}
 }
