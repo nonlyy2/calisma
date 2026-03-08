@@ -7,36 +7,25 @@ import (
 
 func main() {
 	testCases := []struct {
-		nums     []int
-		expected int
+		s        string
+		expected bool
 	}{
-		{
-			nums:     []int{1, 1, 0, 1},
-			expected: 3, // Удаляем ноль, получаем три единицы
-		},
-		{
-			nums:     []int{0, 1, 1, 1, 0, 1, 1, 0, 1},
-			expected: 5, // Удаляем второй ноль, склеиваем 1,1,1 и 1,1
-		},
-		{
-			nums:     []int{1, 1, 1},
-			expected: 2, // Обязаны удалить один элемент, останется 2
-		},
-		{
-			nums:     []int{0, 0, 0},
-			expected: 0, // Как ни крути, одни нули
-		},
+		{s: "aba", expected: true},                     // Уже палиндром
+		{s: "abca", expected: true},                    // Удаляем 'c' (или 'b') -> "aba" или "aca"
+		{s: "abc", expected: false},                    // Удаление одного символа не спасет
+		{s: "eeccccbebaeeabebccceea", expected: false}, // Сложный тест на длинную строку
+		{s: "cbbcc", expected: true},                   // Удаляем первую 'c' -> "bbcc" (нет), удаляем последнюю 'c' -> "cbbc" (да!)
 	}
 
-	fmt.Println("🪟 Тестируем Longest Subarray of 1's (#1493)...")
+	fmt.Println("🔍 Тестируем Valid Palindrome II (#680)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.LongestSubarray(tc.nums)
+		result := leetcode.ValidPalindrome(tc.s)
 		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден (Длина: %d)\n", i+1, result)
+			fmt.Printf("Тест %d: ✅ Пройден (\"%s\")\n", i+1, tc.s)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %d, получили %d\n", i+1, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! Строка: \"%s\". Ожидали %v, получили %v\n", i+1, tc.s, tc.expected, result)
 		}
 	}
 }
