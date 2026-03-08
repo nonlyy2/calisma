@@ -7,45 +7,43 @@ import (
 
 func main() {
 	testCases := []struct {
-		points   [][]int
-		expected bool
+		chars    []string // используем string для удобства инициализации
+		expected int
+		result   []string
 	}{
 		{
-			// Пример 1: Симметрично относительно x = 0
-			points:   [][]int{{1, 1}, {-1, 1}},
-			expected: true,
+			chars:    []string{"a", "a", "b", "b", "c", "c", "c"},
+			expected: 6, // "a2b2c3"
+			result:   []string{"a", "2", "b", "2", "c", "3"},
 		},
 		{
-			// Пример 2: Несимметрично (разная высота y)
-			points:   [][]int{{1, 1}, {-1, 2}},
-			expected: false,
+			chars:    []string{"a"},
+			expected: 1, // "a"
+			result:   []string{"a"},
 		},
 		{
-			// Пример 3: Три точки, одна на оси симметрии
-			points:   [][]int{{1, 1}, {-1, 1}, {0, 1}},
-			expected: true,
-		},
-		{
-			// Пример 4: Точки с одинаковыми координатами (дубликаты)
-			points:   [][]int{{1, 1}, {1, 1}, {-1, 1}},
-			expected: true,
-		},
-		{
-			// Пример 5: Сложный случай
-			points:   [][]int{{0, 0}, {1, 0}, {3, 0}},
-			expected: false,
+			chars:    []string{"a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b"},
+			expected: 4, // "ab12"
+			result:   []string{"a", "b", "1", "2"},
 		},
 	}
 
-	fmt.Println("🪞 Тестируем Line Reflection (#356)...")
+	fmt.Println("🗜️ Тестируем String Compression (#443)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.IsReflected(tc.points)
-		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден\n", i+1)
+		// Конвертируем []string в []byte для функции
+		byteChars := make([]byte, len(tc.chars))
+		for j, s := range tc.chars {
+			byteChars[j] = s[0]
+		}
+
+		newLen := leetcode.Compress(byteChars)
+
+		if newLen == tc.expected {
+			fmt.Printf("Тест %d: ✅ Длина совпала (%d)\n", i+1, newLen)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка длины! Ожидали %d, получили %d\n", i+1, tc.expected, newLen)
 		}
 	}
 }
