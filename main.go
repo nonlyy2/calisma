@@ -7,45 +7,45 @@ import (
 
 func main() {
 	testCases := []struct {
-		seats    []int
-		expected int
+		points   [][]int
+		expected bool
 	}{
 		{
-			// Классический случай: садимся посередине (индекс 2)
-			seats:    []int{1, 0, 0, 0, 1, 0, 1},
-			expected: 2,
+			// Пример 1: Симметрично относительно x = 0
+			points:   [][]int{{1, 1}, {-1, 1}},
+			expected: true,
 		},
 		{
-			// Краевой случай 1: нули в самом конце. Садимся на последний стул (индекс 3)
-			seats:    []int{1, 0, 0, 0},
-			expected: 3,
+			// Пример 2: Несимметрично (разная высота y)
+			points:   [][]int{{1, 1}, {-1, 2}},
+			expected: false,
 		},
 		{
-			// Краевой случай 2: нули в самом начале. Садимся на первый стул (индекс 0)
-			seats:    []int{0, 0, 1},
-			expected: 2,
+			// Пример 3: Три точки, одна на оси симметрии
+			points:   [][]int{{1, 1}, {-1, 1}, {0, 1}},
+			expected: true,
 		},
 		{
-			// Минимально возможное окно
-			seats:    []int{1, 0, 1},
-			expected: 1,
+			// Пример 4: Точки с одинаковыми координатами (дубликаты)
+			points:   [][]int{{1, 1}, {1, 1}, {-1, 1}},
+			expected: true,
 		},
 		{
-			// Длинная пустая дистанция с краю
-			seats:    []int{0, 0, 0, 0, 1, 0, 1},
-			expected: 4,
+			// Пример 5: Сложный случай
+			points:   [][]int{{0, 0}, {1, 0}, {3, 0}},
+			expected: false,
 		},
 	}
 
-	fmt.Println("🍿 Тестируем Maximize Distance to Closest Person (#849)...")
+	fmt.Println("🪞 Тестируем Line Reflection (#356)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.MaxDistToClosest(tc.seats)
+		result := leetcode.IsReflected(tc.points)
 		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден (Макс. дистанция: %d)\n", i+1, result)
+			fmt.Printf("Тест %d: ✅ Пройден\n", i+1)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Места: %v. Ожидали %d, получили %d\n", i+1, tc.seats, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, result)
 		}
 	}
 }
