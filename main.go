@@ -7,43 +7,41 @@ import (
 
 func main() {
 	testCases := []struct {
-		chars    []string // используем string для удобства инициализации
+		nums     []int
+		k        int
 		expected int
-		result   []string
 	}{
 		{
-			chars:    []string{"a", "a", "b", "b", "c", "c", "c"},
-			expected: 6, // "a2b2c3"
-			result:   []string{"a", "2", "b", "2", "c", "3"},
+			nums:     []int{1, 1, 1},
+			k:        2,
+			expected: 2, // [1,1] и [1,1]
 		},
 		{
-			chars:    []string{"a"},
-			expected: 1, // "a"
-			result:   []string{"a"},
+			nums:     []int{1, 2, 3},
+			k:        3,
+			expected: 2, // [1,2] и [3]
 		},
 		{
-			chars:    []string{"a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b"},
-			expected: 4, // "ab12"
-			result:   []string{"a", "b", "1", "2"},
+			nums:     []int{1, -1, 0},
+			k:        0,
+			expected: 3, // [1,-1], [0], [1,-1,0]
+		},
+		{
+			nums:     []int{-1, -1, 1},
+			k:        0,
+			expected: 1, // [-1, 1]
 		},
 	}
 
-	fmt.Println("🗜️ Тестируем String Compression (#443)...")
+	fmt.Println("🔢 Тестируем Subarray Sum Equals K (#560)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		// Конвертируем []string в []byte для функции
-		byteChars := make([]byte, len(tc.chars))
-		for j, s := range tc.chars {
-			byteChars[j] = s[0]
-		}
-
-		newLen := leetcode.Compress(byteChars)
-
-		if newLen == tc.expected {
-			fmt.Printf("Тест %d: ✅ Длина совпала (%d)\n", i+1, newLen)
+		result := leetcode.SubarraySum(tc.nums, tc.k)
+		if result == tc.expected {
+			fmt.Printf("Тест %d: ✅ Пройден. Результат: %d\n", i+1, result)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка длины! Ожидали %d, получили %d\n", i+1, tc.expected, newLen)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %d, получили %d\n", i+1, tc.expected, result)
 		}
 	}
 }
