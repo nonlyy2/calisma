@@ -3,30 +3,42 @@ package main
 import (
 	"fmt"
 	"neetcode/leetcode"
+	"reflect"
 )
 
 func main() {
-	testCases := []struct {
-		s1       string
-		s2       string
-		expected bool
-	}{
-		{s1: "ab", s2: "eidbaooo", expected: true},  // "ba" — это перестановка "ab"
-		{s1: "ab", s2: "eidboaoo", expected: false}, // буквы есть, но не подряд
-		{s1: "adc", s2: "dcda", expected: true},     // "cda" — перестановка "adc"
-		{s1: "hello", s2: "ooolleoooleh", expected: false},
-		{s1: "a", s2: "ab", expected: true},
+	// Вспомогательная функция для создания дерева для тестов
+	// Структура: [1,2,3,null,5,null,4]
+	root := &leetcode.TreeNode{
+		Val: 1,
+		Left: &leetcode.TreeNode{
+			Val:   2,
+			Right: &leetcode.TreeNode{Val: 5},
+		},
+		Right: &leetcode.TreeNode{
+			Val:   3,
+			Right: &leetcode.TreeNode{Val: 4},
+		},
 	}
 
-	fmt.Println("🔄 Тестируем Permutation in String (#567)...")
+	testCases := []struct {
+		root     *leetcode.TreeNode
+		expected []int
+	}{
+		{root: root, expected: []int{1, 3, 4}},
+		{root: nil, expected: []int{}},
+		{root: &leetcode.TreeNode{Val: 1, Left: &leetcode.TreeNode{Val: 2}}, expected: []int{1, 2}},
+	}
+
+	fmt.Println("🌳 Тестируем Right Side View (#199)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.CheckInclusion(tc.s1, tc.s2)
-		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден (%s в %s)\n", i+1, tc.s1, tc.s2)
+		result := leetcode.RightSideView(tc.root)
+		if reflect.DeepEqual(result, tc.expected) {
+			fmt.Printf("Тест %d: ✅ Пройден. Результат: %v\n", i+1, result)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v для (%s в %s)\n", i+1, tc.expected, result, tc.s1, tc.s2)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, result)
 		}
 	}
 }
