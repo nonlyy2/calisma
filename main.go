@@ -3,45 +3,46 @@ package main
 import (
 	"fmt"
 	"neetcode/leetcode"
+	"reflect"
 )
 
 func main() {
 	testCases := []struct {
 		nums     []int
-		k        int
-		expected int
+		expected []int
 	}{
 		{
-			nums:     []int{1, 1, 1},
-			k:        2,
-			expected: 2, // [1,1] и [1,1]
+			nums:     []int{0, 1, 0, 3, 12},
+			expected: []int{1, 3, 12, 0, 0},
+		},
+		{
+			nums:     []int{0},
+			expected: []int{0},
 		},
 		{
 			nums:     []int{1, 2, 3},
-			k:        3,
-			expected: 2, // [1,2] и [3]
+			expected: []int{1, 2, 3},
 		},
 		{
-			nums:     []int{1, -1, 0},
-			k:        0,
-			expected: 3, // [1,-1], [0], [1,-1,0]
-		},
-		{
-			nums:     []int{-1, -1, 1},
-			k:        0,
-			expected: 1, // [-1, 1]
+			nums:     []int{0, 0, 1},
+			expected: []int{1, 0, 0},
 		},
 	}
 
-	fmt.Println("🔢 Тестируем Subarray Sum Equals K (#560)...")
+	fmt.Println("🚀 Тестируем Move Zeroes (#283)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.SubarraySum(tc.nums, tc.k)
-		if result == tc.expected {
-			fmt.Printf("Тест %d: ✅ Пройден. Результат: %d\n", i+1, result)
+		// Копируем слайс, чтобы не менять оригинал в тест-кейсе
+		input := make([]int, len(tc.nums))
+		copy(input, tc.nums)
+
+		leetcode.MoveZeroes(input)
+
+		if reflect.DeepEqual(input, tc.expected) {
+			fmt.Printf("Тест %d: ✅ Пройден. Результат: %v\n", i+1, input)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %d, получили %d\n", i+1, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, input)
 		}
 	}
 }
