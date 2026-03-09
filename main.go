@@ -3,36 +3,36 @@ package main
 import (
 	"fmt"
 	"neetcode/leetcode"
-	"reflect"
 )
 
 func main() {
 	testCases := []struct {
-		A        []int
-		B        []int
-		expected []int
+		paths    [][]string
+		expected string
 	}{
 		{
-			A:        []int{1, 3, 2, 4},
-			B:        []int{3, 1, 2, 4},
-			expected: []int{0, 2, 3, 4},
+			paths:    [][]string{{"London", "New York"}, {"New York", "Lima"}, {"Lima", "Sao Paulo"}},
+			expected: "Sao Paulo",
 		},
 		{
-			A:        []int{2, 3, 1},
-			B:        []int{3, 1, 2},
-			expected: []int{0, 1, 3},
+			paths:    [][]string{{"B", "C"}, {"D", "B"}, {"C", "A"}},
+			expected: "A",
+		},
+		{
+			paths:    [][]string{{"A", "Z"}},
+			expected: "Z",
 		},
 	}
 
-	fmt.Println("📊 Тестируем Find the Prefix Common Array (#2657)...")
+	fmt.Println("✈️ Тестируем Destination City (#1436)...")
 	fmt.Println("---")
 
 	for i, tc := range testCases {
-		result := leetcode.FindThePrefixCommonArray(tc.A, tc.B)
-		if reflect.DeepEqual(result, tc.expected) {
-			fmt.Printf("Тест %d: ✅ Пройден. Результат: %v\n", i+1, result)
+		result := leetcode.DestCity(tc.paths)
+		if result == tc.expected {
+			fmt.Printf("Тест %d: ✅ Пройден. Результат: %s\n", i+1, result)
 		} else {
-			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, result)
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %s, получили %s\n", i+1, tc.expected, result)
 		}
 	}
 }
