@@ -5,88 +5,33 @@ import (
 	"neetcode/leetcode"
 )
 
-// sliceToList конвертирует обычный слайс в связный список
-func sliceToList(nums []int) *leetcode.ListNode {
-	if len(nums) == 0 {
-		return nil
-	}
-	dummy := &leetcode.ListNode{}
-	curr := dummy
-	for _, n := range nums {
-		curr.Next = &leetcode.ListNode{Val: n}
-		curr = curr.Next
-	}
-	return dummy.Next
-}
-
-// listToSlice конвертирует список обратно в слайс (удобно для сравнения в тестах)
-func listToSlice(head *leetcode.ListNode) []int {
-	res := []int{}
-	for head != nil {
-		res = append(res, head.Val)
-		head = head.Next
-	}
-	return res
-}
-
-// printList печатает список в консоль в удобном виде: 1 -> 2 -> 3
-func printList(head *leetcode.ListNode) {
-	if head == nil {
-		fmt.Println("Empty List (nil)")
-		return
-	}
-	curr := head
-	for curr != nil {
-		fmt.Printf("%d", curr.Val)
-		if curr.Next != nil {
-			fmt.Print(" -> ")
-		}
-		curr = curr.Next
-	}
-	fmt.Println()
-}
-
 func main() {
-	fmt.Println("🔗 Тестируем Remove Nth Node From End (#19)...")
-	fmt.Println("-------------------------------------------")
+	fmt.Println("🎲 Тестируем RandomizedSet (#380)...")
+	fmt.Println("---")
 
-	testCases := []struct {
-		nums     []int
-		n        int
-		expected []int
-	}{
-		{
-			nums:     []int{1, 2, 3, 4, 5},
-			n:        2,
-			expected: []int{1, 2, 3, 5},
-		},
-		{
-			nums:     []int{1},
-			n:        1,
-			expected: []int{},
-		},
-		{
-			nums:     []int{1, 2},
-			n:        1,
-			expected: []int{1},
-		},
-		{
-			nums:     []int{1, 2},
-			n:        2,
-			expected: []int{2},
-		},
-	}
+	obj := leetcode.Constructor()
 
-	for i, tc := range testCases {
-		head := sliceToList(tc.nums)
-		fmt.Printf("Тест %d: Вход: %v, n: %d\n", i+1, tc.nums, tc.n)
+	// Тест 1: Вставка 1
+	fmt.Printf("Insert(1): %v (ожидаем true)\n", obj.Insert(1))
 
-		result := leetcode.RemoveNthFromEnd(head, tc.n)
+	// Тест 2: Удаление 2 (которого нет)
+	fmt.Printf("Remove(2): %v (ожидаем false)\n", obj.Remove(2))
 
-		fmt.Print("       Результат: ")
-		printList(result)
+	// Тест 3: Вставка 2
+	fmt.Printf("Insert(2): %v (ожидаем true)\n", obj.Insert(2))
 
-		// Простая визуальная проверка (можно добавить reflect.DeepEqual для строгости)
-		fmt.Println("-------------------------------------------")
-	}
+	// Тест 4: GetRandom (должен вернуть 1 или 2)
+	fmt.Printf("GetRandom(): %d\n", obj.GetRandom())
+
+	// Тест 5: Удаление 1
+	fmt.Printf("Remove(1): %v (ожидаем true)\n", obj.Remove(1))
+
+	// Тест 6: Проверка на наличие 2 после удаления 1
+	fmt.Printf("Insert(2): %v (ожидаем false)\n", obj.Insert(2))
+
+	// Тест 7: Финальный GetRandom (должен вернуть точно 2)
+	fmt.Printf("GetRandom(): %d\n", obj.GetRandom())
+
+	fmt.Println("---")
+	fmt.Println("Если паники не было и булевы значения совпали — ты красава!")
 }
