@@ -3,35 +3,54 @@ package main
 import (
 	"fmt"
 	"neetcode/leetcode"
+	"reflect"
 )
 
 func main() {
-	fmt.Println("🎲 Тестируем RandomizedSet (#380)...")
+	testCases := []struct {
+		nums1    []int
+		m        int
+		nums2    []int
+		n        int
+		expected []int
+	}{
+		{
+			nums1:    []int{1, 2, 3, 0, 0, 0},
+			m:        3,
+			nums2:    []int{2, 5, 6},
+			n:        3,
+			expected: []int{1, 2, 2, 3, 5, 6},
+		},
+		{
+			nums1:    []int{1},
+			m:        1,
+			nums2:    []int{},
+			n:        0,
+			expected: []int{1},
+		},
+		{
+			nums1:    []int{0},
+			m:        0,
+			nums2:    []int{1},
+			n:        1,
+			expected: []int{1},
+		},
+	}
+
+	fmt.Println("🚀 Тестируем Merge Sorted Array (#88)...")
 	fmt.Println("---")
 
-	obj := leetcode.Constructor()
+	for i, tc := range testCases {
+		// Делаем копию nums1, так как функция меняет его in-place
+		nums1Copy := make([]int, len(tc.nums1))
+		copy(nums1Copy, tc.nums1)
 
-	// Тест 1: Вставка 1
-	fmt.Printf("Insert(1): %v (ожидаем true)\n", obj.Insert(1))
+		leetcode.Merge(nums1Copy, tc.m, tc.nums2, tc.n)
 
-	// Тест 2: Удаление 2 (которого нет)
-	fmt.Printf("Remove(2): %v (ожидаем false)\n", obj.Remove(2))
-
-	// Тест 3: Вставка 2
-	fmt.Printf("Insert(2): %v (ожидаем true)\n", obj.Insert(2))
-
-	// Тест 4: GetRandom (должен вернуть 1 или 2)
-	fmt.Printf("GetRandom(): %d\n", obj.GetRandom())
-
-	// Тест 5: Удаление 1
-	fmt.Printf("Remove(1): %v (ожидаем true)\n", obj.Remove(1))
-
-	// Тест 6: Проверка на наличие 2 после удаления 1
-	fmt.Printf("Insert(2): %v (ожидаем false)\n", obj.Insert(2))
-
-	// Тест 7: Финальный GetRandom (должен вернуть точно 2)
-	fmt.Printf("GetRandom(): %d\n", obj.GetRandom())
-
-	fmt.Println("---")
-	fmt.Println("Если паники не было и булевы значения совпали — ты красава!")
+		if reflect.DeepEqual(nums1Copy, tc.expected) {
+			fmt.Printf("Тест %d: ✅ Пройден. Итог: %v\n", i+1, nums1Copy)
+		} else {
+			fmt.Printf("Тест %d: ❌ Ошибка! Ожидали %v, получили %v\n", i+1, tc.expected, nums1Copy)
+		}
+	}
 }
