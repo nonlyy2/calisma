@@ -6,35 +6,50 @@ import (
 )
 
 func main() {
-	fmt.Println("🔄 Тестируем Longest Palindromic Substring (#5)...")
+	fmt.Println("🌳 Тестируем Lowest Common Ancestor (#236)...")
 	fmt.Println("-------------------------------------------")
 
-	testCases := []struct {
-		s        string
-		expected []string // Несколько вариантов, если длина совпадает
-	}{
-		{s: "babad", expected: []string{"bab", "aba"}},
-		{s: "cbbd", expected: []string{"bb"}},
-		{s: "a", expected: []string{"a"}},
-		{s: "ac", expected: []string{"a", "c"}},
-		{s: "racecar", expected: []string{"racecar"}},
-	}
+	// Строим дерево:
+	//       3
+	//      / \
+	//     5   1
+	//    / \ / \
+	//   6  2 0  8
+	//     / \
+	//    7   4
 
-	for i, tc := range testCases {
-		result := leetcode.LongestPalindrome(tc.s)
+	root := &leetcode.TreeNode{Val: 3}
+	root.Left = &leetcode.TreeNode{Val: 5}
+	root.Right = &leetcode.TreeNode{Val: 1}
 
-		match := false
-		for _, exp := range tc.expected {
-			if result == exp {
-				match = true
-				break
-			}
-		}
+	node6 := &leetcode.TreeNode{Val: 6}
+	node2 := &leetcode.TreeNode{Val: 2}
+	root.Left.Left = node6
+	root.Left.Right = node2
 
-		if match {
-			fmt.Printf("✅ Тест %d: '%s' -> '%s'\n", i+1, tc.s, result)
-		} else {
-			fmt.Printf("❌ Тест %d: '%s' -> ОШИБКА! Получили '%s', ждали один из %v\n", i+1, tc.s, result, tc.expected)
-		}
+	node7 := &leetcode.TreeNode{Val: 7}
+	node4 := &leetcode.TreeNode{Val: 4}
+	node2.Left = node7
+	node2.Right = node4
+
+	node5 := root.Left
+	node1 := root.Right
+
+	// Тест 1: LCA для 5 и 1 (должен быть 3)
+	res1 := leetcode.LowestCommonAncestor2(root, node5, node1)
+	check("LCA(5, 1)", res1.Val, 3)
+
+	// Тест 2: LCA для 5 и 4 (должен быть 5, так как 5 - предок 4)
+	res2 := leetcode.LowestCommonAncestor2(root, node5, node4)
+	check("LCA(5, 4)", res2.Val, 5)
+
+	fmt.Println("-------------------------------------------")
+}
+
+func check(name string, got, want int) {
+	if got == want {
+		fmt.Printf("✅ %s: Получено %d\n", name, got)
+	} else {
+		fmt.Printf("❌ %s: ОШИБКА! Ожидали %d, получили %d\n", name, want, got)
 	}
 }
