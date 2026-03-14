@@ -5,29 +5,28 @@ import (
 	"neetcode/leetcode"
 )
 
+// Вспомогательная функция для печати
+func printList(head *leetcode.ListNode) {
+	for head != nil {
+		fmt.Printf("%d ", head.Val)
+		head = head.Next
+	}
+	fmt.Println()
+}
+
 func main() {
-	fmt.Println("🔄 Тестируем Linked List Cycle (#141)...")
-	fmt.Println("-------------------------------------------")
+	fmt.Println("🔗 Тестируем Reorder List (#143)...")
 
-	// Тест 1: Список с циклом 3 -> 2 -> 0 -> -4 -> (назад к 2)
-	node1 := &leetcode.ListNode{Val: 3}
-	node2 := &leetcode.ListNode{Val: 2}
-	node3 := &leetcode.ListNode{Val: 0}
-	node4 := &leetcode.ListNode{Val: -4}
+	// Создаем 1 -> 2 -> 3 -> 4 -> 5
+	n5 := &leetcode.ListNode{Val: 5}
+	n4 := &leetcode.ListNode{Val: 4, Next: n5}
+	n3 := &leetcode.ListNode{Val: 3, Next: n4}
+	n2 := &leetcode.ListNode{Val: 2, Next: n3}
+	n1 := &leetcode.ListNode{Val: 1, Next: n2}
 
-	node1.Next = node2
-	node2.Next = node3
-	node3.Next = node4
-	node4.Next = node2 // Создаем цикл
+	leetcode.ReorderList(n1)
 
-	fmt.Printf("Тест 1 (с циклом): Получено %v, ожидаем true ✅\n", leetcode.HasCycle(node1))
-
-	// Тест 2: Список без цикла 1 -> 2
-	nodeA := &leetcode.ListNode{Val: 1}
-	nodeB := &leetcode.ListNode{Val: 2}
-	nodeA.Next = nodeB
-
-	fmt.Printf("Тест 2 (без цикла): Получено %v, ожидаем false ✅\n", leetcode.HasCycle(nodeA))
-
-	fmt.Println("-------------------------------------------")
+	fmt.Print("Результат: ")
+	printList(n1)
+	fmt.Println("Ожидаем:   1 5 2 4 3")
 }
