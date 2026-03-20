@@ -15,7 +15,7 @@ import (
 
 const (
 	// path to obsidian markdown file
-	obsidianFilePath = "/Users/assylkhan/Library/Mobile Documents/com~apple~CloudDocs/Obsidian/main/03_LeetCode/LeetCode Archive.md"
+	obsidianFilePath = "/Users/assylkhan/Library/Mobile Documents/iCloud~md~obsidian/Documents/main/03_LeetCode/LeetCode Archive.md"
 
 	// path to solutions
 	goFilesBaseDir = "/Users/assylkhan/Desktop/neetcode-go/leetcode"
